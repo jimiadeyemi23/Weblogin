@@ -11,9 +11,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
 public class DemoTesting 
 {
 	public WebDriver driver = null;
+	
+	static ExtentReports extent = new ExtentReports("C:\\Users\\Admin\\Desktop\\Reports\\Report.html", true);
+	ExtentTest test;
 	
 	@Before
 	public void setup()
@@ -25,6 +32,10 @@ public class DemoTesting
 	@Test
 	public void CreateUser() throws InterruptedException, IOException
 	{
+		
+		test = extent.startTest("verify application");	
+		test.log(LogStatus.INFO, "started test");
+		
 		driver.get("http://thedemosite.co.uk/addauser.php");
 		CreateUserPage cup = PageFactory.initElements(driver, CreateUserPage.class);
 		cup.InputUserName("jimi");
@@ -35,7 +46,17 @@ public class DemoTesting
 		LoginPage lp = PageFactory.initElements(driver, LoginPage.class);
 		lp.InputUserName("jimi");
 		lp.InputPassword("jimi");
+		
 		//assertEquals("jimi",lp.get_Username());
+		
+		if(lp.get_Password().equals("**Successful Login**"))
+		{
+			test.log(LogStatus.PASS, "login successful");
+		}
+		else
+		{
+			test.log(LogStatus.FAIL, "login failed");
+		}
 		assertEquals("**Successful Login**",lp.get_Password());
 
 	}
@@ -43,6 +64,6 @@ public class DemoTesting
 	@After
 	public void tearDown()
 	{
-		driver.quit();
+		//driver.quit();
 	}
 }

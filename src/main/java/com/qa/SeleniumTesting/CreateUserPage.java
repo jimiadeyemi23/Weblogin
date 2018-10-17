@@ -28,8 +28,10 @@ public class CreateUserPage
 	public void InputPassword(String pass)
 	{
 		password.sendKeys(pass);
-		submit.submit();
+		password.submit();
+		loginpage.click();
 	}
+	
 
 	
 	public WebElement get_Password()
