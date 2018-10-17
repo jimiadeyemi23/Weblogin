@@ -23,12 +23,9 @@ public class Read
 	
 	
 	public static void setExcelFile(String path, int sheetIndex)
-	{
-		
-		
+	{	
 		try
 		{
-			Constants con  = new Constants();
 			
 			//open excel file
 			FileInputStream ExcelFile = new FileInputStream(Constants.path);
